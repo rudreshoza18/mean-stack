@@ -1,11 +1,12 @@
 const express = require("express");
+const path = require('path');
 const app = express();
 const routes = require("./Routes/routes");
 const PORT = process.env.PORT || 3000;
 const db = require("./DB/db");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use('/images',express.static(path.join('images')))
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(

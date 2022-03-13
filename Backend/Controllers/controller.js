@@ -1,11 +1,4 @@
 const models = require("../Models/model");
-exports.getData = (req, res) => {
-  try {
-    res.status(200).send("try");
-  } catch (e) {
-    res.status(400).send("data");
-  }
-};
 exports.getPosts = async (req, res) => {
   try {
     const posts = await models.getPostsData(req.body);
@@ -26,31 +19,36 @@ exports.getPosts = async (req, res) => {
   }
 };
 exports.createPost = async (req, res) => {
+  
+  const data = await models.createPosts(req);
   try {
     res.status(200).json({
       status: 200,
-      data: await models.createPosts(req.body),
+      data,
+      msg: "Data Fetched Sucessfully",
     });
   } catch (error) {
     res.status(400).json({
       err: e,
-      data: [],
+      data,
       msg: e.message,
+      status: 400,
     });
   }
 };
 exports.deletePost = async (req, res) => {
   const params = req.params;
-  console.log({ params });
   try {
     res.status(200).json({
       data: await models.deletePost(params.id),
       msg: "Post Deleted",
+      status: 200,
     });
   } catch (e) {
     res.status(400).json({
       err: e,
       msg: e.message,
+      status: 400,
     });
   }
 };
